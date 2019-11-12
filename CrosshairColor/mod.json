@@ -1,0 +1,9 @@
+﻿{
+	"FriendlyName": "CrosshairColor",
+	"Author": "Ciastex",
+	"Contact": "Ciastex#6170",
+	"ModuleFileName": "CrosshairColor.dll",
+	"Priority": 10,
+	"SkipLoad": false,
+	"Dependencies": []
+}
