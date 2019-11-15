@@ -18,7 +18,6 @@ namespace CrosshairColor
         private const string CrosshairColorBlueSettingsKey = "CrosshairColorB";
 
         internal Settings Settings { get; private set; }
-        internal Log Log { get; private set; }
 
         private Color ReticleColor { get; set; }
 
@@ -26,7 +25,6 @@ namespace CrosshairColor
         {
             InitSettings();
             Terminal.InitFinished += Terminal_InitFinished;
-            Log = new Log("test");
         }
 
         private void Terminal_InitFinished(object sender, System.EventArgs e)

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\ModuleInit.Fody.2.1.0\build\ModuleInit.Fody.props" Condition="Exists('..\packages\ModuleInit.Fody.2.1.0\build\ModuleInit.Fody.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,6 +13,9 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -36,17 +40,20 @@
       <HintPath>..\packages\Lib.Harmony.1.2.0.1\lib\net35\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-dev">
-      <HintPath>..\packages\Centrifuge.GameSupport.GTTOD.0.4.0\lib\net40\Assembly-CSharp-dev.dll</HintPath>
+      <HintPath>..\packages\Centrifuge.GameSupport.GTTOD.0.5.0\lib\net40\Assembly-CSharp-dev.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Centrifuge.GTTOD, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Centrifuge.GameSupport.GTTOD.0.4.0\lib\net40\Centrifuge.GTTOD.dll</HintPath>
+      <HintPath>..\packages\Centrifuge.GameSupport.GTTOD.0.5.0\lib\net40\Centrifuge.GTTOD.dll</HintPath>
+    </Reference>
+    <Reference Include="Centrifuge.UnityInterop, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Centrifuge.UnityInterop.2.0.0\lib\net35\Centrifuge.UnityInterop.dll</HintPath>
     </Reference>
     <Reference Include="LitJSON, Version=0.15.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LitJson.0.15.0\lib\net40\LitJSON.dll</HintPath>
     </Reference>
     <Reference Include="Reactor.API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Centrifuge.Mod.SDK.1.2.0\lib\net35\Reactor.API.dll</HintPath>
+      <HintPath>..\packages\Centrifuge.Mod.SDK.2.0.0\lib\net35\Reactor.API.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -56,25 +63,19 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Centrifuge.GameSupport.GTTOD.0.4.0\lib\net40\UnityEngine.dll</HintPath>
+      <HintPath>..\packages\Centrifuge.GameSupport.GTTOD.0.5.0\lib\net40\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Centrifuge.GameSupport.GTTOD.0.4.0\lib\net40\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\packages\Centrifuge.GameSupport.GTTOD.0.5.0\lib\net40\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Centrifuge.GameSupport.GTTOD.0.4.0\lib\net40\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>..\packages\Centrifuge.GameSupport.GTTOD.0.5.0\lib\net40\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Centrifuge.GameSupport.GTTOD.0.4.0\lib\net40\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>..\packages\Centrifuge.GameSupport.GTTOD.0.5.0\lib\net40\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>D:\Steam\steamapps\common\Get To The Orange Door\Get To The Orange Door_Data\Managed\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIElementsModule">
-      <HintPath>D:\Steam\steamapps\common\Get To The Orange Door\Get To The Orange Door_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule">
-      <HintPath>D:\Steam\steamapps\common\Get To The Orange Door\Get To The Orange Door_Data\Managed\UnityEngine.UIModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -88,4 +89,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\ModuleInit.Fody.2.1.0\build\ModuleInit.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ModuleInit.Fody.2.1.0\build\ModuleInit.Fody.props'))" />
+  </Target>
 </Project>
